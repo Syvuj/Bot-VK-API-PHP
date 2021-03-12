@@ -167,46 +167,6 @@ if (preg_match("/^\/sendzams\s(.+)/",$message,$idacc)) {
 
 
 
-if(in_array($cmd, ['/sex', '/секс'])){
-     $komand = R::findOne('commands','cmd = ?',array($cmd));
-     if(!($peer_id == 2000000005) AND !($peer_id == 2000000006) AND !($peer_id == 2000000004)){
-    if($komand->lvl == 1){
-    if($chat_id > 0){ // Если это беседа
-      $members = $vk->request('messages.getConversationMembers', ['peer_id' => $peer_id]); // Запрос на получение данных о пользователях беседы
-      foreach ($members['profiles'] as $useronline) { // При помощи foreach производим работу над данными из пришедшего нам массива
-        $userInfoOnline = $vk->request("users.get", ["user_ids" => $useronline['id']]); // Запрос данных пользователя
-        $first_nameOnline = $userInfoOnline[0]['first_name']; // Имя
-        $last_nameOnline = $userInfoOnline[0]['last_name']; // Фамилия
-        $test9 = $first_nameOnline.' '.$last_nameOnline;
-        $test10 = $useronline['id'];
-        array_push($userssss, $test9);
-        $Onlinelist .= "@id{$useronline['id']} (🐓)"; // Составили текст с онлайн людьми
-      }
-      $rofl_rand = array_rand($rofl, 1);
-      $pizda = $rofl[$rofl_rand];
-      if($rofl_rand == 5 OR $rofl_rand == 12 OR $rofl_rand == 13){
-        $user_rand1 = array_rand($userssss, 1);
-        $user_rand2 = array_rand($userssss, 1);
-        $hui1 = $userssss[$user_rand1];
-        $hui2 = $userssss[$user_rand2];
-        $vk->sendMessage($peer_id, "$hui1 $pizda $hui2");
-      }else{
-      $user_rand = array_rand($userssss, 1);
-      $hui = $userssss[$user_rand];
-      if($rofl_rand == 3 OR $rofl_rand == 4 OR $rofl_rand == 8){
-        $vk->sendMessage($peer_id, "$pizda");
-      }else{
-      $vk->sendMessage($peer_id, "$hui $pizda");
-      }
-      }
-    }else{ // Если это лс с ботом
-      $vk->sendMessage($peer_id, "Команда '/helpers' доступна только в беседах");
-    }
-  }else{$vk->sendMessage($peer_id, "Система отключена");}
-}else{
-    $vk->sendMessage($peer_id, "Для этой конфы отключена возможность использовать данную команду");
-}
-}
 
 if ($data->type == 'message_new') { // команда /бот для проверки онлайна бота
     if ($message == '/set(sex)1') {
